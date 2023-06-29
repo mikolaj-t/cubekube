@@ -7,11 +7,13 @@ import (
 	"time"
 )
 
+const Timeout = 10 * time.Second
+
 func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handler)
 	server := http.Server{
-		ReadHeaderTimeout: 10 * time.Second,
+		ReadHeaderTimeout: Timeout,
 		Addr:              ":8080",
 		Handler:           mux,
 	}
@@ -24,6 +26,6 @@ func main() {
 	}()
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func handler(w http.ResponseWriter, _ *http.Request) {
 	fmt.Fprintln(w, "Hello there!")
 }
